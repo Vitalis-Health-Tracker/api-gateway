@@ -62,7 +62,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config>{
 
     public String getRole(String token)
     {
-        return restClient.get().uri("http://localhost:9090/extract/" + token)
+        return restClient.get().uri("http://localhost:9090/auth/extract/" + token)
                 .retrieve().body(String.class);
     }
 

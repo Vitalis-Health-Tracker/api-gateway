@@ -1,14 +1,24 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://book_eureka:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
 server:
   port: 9088
 spring:
+  main:
+    web-application-type: reactive
   application:
     name: api-gateway
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: "http://localhost:5173/"
+            allowed-methods: "GET, POST, PUT, DELETE, OPTIONS"
+            allowed-headers: "*"
+            allow-credentials: true
+            max-age: 3600
       discovery:
         locator:
           enabled: true
@@ -17,26 +27,24 @@ spring:
           uri: http://localhost:9089
           predicates:
             - Path=/roles/**
-          filters:
-            - AuthFilter
         - id: user-service
           uri: http://localhost:9091
           predicates:
             - Path=/user/**
           filters:
             - AuthFilter
-        - id: fitness-service
-          uri: http://localhost:9092
-          predicates:
-            - Path=/auth/**
-          filters:
-            - AuthFilter
-        - id: diet-service
-          uri: http://localhost:9093
-          predicates:
-            - Path=/auth/**
-          filters:
-            - AuthFilter
+#        - id: fitness-service
+#          uri: http://localhost:9092
+#          predicates:
+#            - Path=/auth/**
+#          filters:
+#            - AuthFilter
+#        - id: diet-service
+#          uri: http://localhost:9093
+#          predicates:
+#            - Path=/auth/**
+#          filters:
+#            - AuthFilter
         - id: wellbeing-service
           uri: http://localhost:9094
           predicates:
