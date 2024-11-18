@@ -14,9 +14,9 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowed-origins: "http://localhost:5173/"
+            allowed-origins: "http://localhost:5173"
             allowed-methods: "GET, POST, PUT, DELETE, OPTIONS"
-            allowed-headers: "*"
+            allowed-headers: "Authorization, Content-Type, X-Requested-With, Accept"
             allow-credentials: true
             max-age: 3600
       discovery:
@@ -33,18 +33,18 @@ spring:
             - Path=/user/**
           filters:
             - AuthFilter
-#        - id: fitness-service
-#          uri: http://localhost:9092
-#          predicates:
-#            - Path=/auth/**
-#          filters:
-#            - AuthFilter
-#        - id: diet-service
-#          uri: http://localhost:9093
-#          predicates:
-#            - Path=/auth/**
-#          filters:
-#            - AuthFilter
+        - id: fitness-service
+          uri: http://localhost:9092
+          predicates:
+            - Path=/health/fitness/**
+          filters:
+            - AuthFilter
+        - id: diet-service
+          uri: http://localhost:9093
+          predicates:
+            - Path=/diet/**
+          filters:
+            - AuthFilter
         - id: wellbeing-service
           uri: http://localhost:9094
           predicates:
